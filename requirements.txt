@@ -1,0 +1,6 @@
+We need all these following libraries to work the Sentiment Analysis Web App:
+- streamlit
+- TextBlob
+- plotly
+- pandas
+- CSV file that contains some text specifically some comments or reviews and file should not be larger then 200 MB
