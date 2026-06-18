@@ -8,25 +8,25 @@ st.title("Sentiment Analyzer")
 st.markdown("Upload your CSV file and analyze sentiments instantly.")
 st.markdown("---")
 
-uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
+uploadfile = st.file_uploader("Upload your CSV file", type="csv")
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+if uploadfile is not None:
+    df = pd.read_csv(uploadfile)
     st.success(f"File uploaded successfully! {len(df)} rows found.")
     st.markdown("---")
 
     columns = df.columns.tolist()
-    selected_column = st.selectbox("Which column contains the review text?", columns)
+    selectedcolumn = st.selectbox("Which column contains the review text?", columns)
 
-    if selected_column:
+    if selectedcolumn:
         st.markdown("---")
         st.subheader("Preview of your data")
-        st.dataframe(df[[selected_column]].head(10))
+        st.dataframe(df[[selectedcolumn]].head(10))
 
         st.markdown("---")
-        st.subheader("Analyzing... please wait")
+        st.subheader("Analyzing is started... please wait")
 
-        def get_label(score):
+        def getlabel(score):
             if score > 0.1:
                 return "Positive"
             elif score < -0.1:
@@ -34,11 +34,11 @@ if uploaded_file is not None:
             else:
                 return "Neutral"
 
-        df['polarity'] = df[selected_column].apply(
+        df['polarity'] = df[selectcolumn].apply(
             lambda x: TextBlob(str(x)).sentiment.polarity
         )
 
-        df['sentiment'] = df['polarity'].apply(get_label)
+        df['sentiment'] = df['polarity'].apply(getlabel)
 
         st.success("Done! Analysis complete ✅")
         st.markdown("---")
@@ -52,11 +52,11 @@ if uploaded_file is not None:
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.metric("Positive 😊", positive)
+            st.metric("Positive", positive)
         with col2:
-            st.metric("Negative 😞", negative)
+            st.metric("Negative", negative)
         with col3:
-            st.metric("Neutral 😐", neutral)
+            st.metric("Neutral", neutral)
         st.markdown("---")
         st.subheader("Sentiment Breakdown")
 
